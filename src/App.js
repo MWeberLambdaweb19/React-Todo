@@ -4,9 +4,13 @@ import Todo from './components/TodoComponents/Todo.js';
 const items = [
   {
     task: 'Organize Garage',
+    id: Date.now(),
+    completed: false,
   },
   {
     task: 'Bake Cookies',
+    id: Date.now(),
+    completed: false,
   }
 ]
 
@@ -17,9 +21,11 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      itemsList: items,
+      itemsList: [items],
       newItem: {
         task: "",
+        id: Date.now(),
+        completed: false,
       }
     };
   }
@@ -29,7 +35,9 @@ class App extends React.Component {
     this.setState({
       itemsList: [...this.state.itemsList, this.state.newItem],
       newItem: {
-          task:"",
+          task: "",
+          id: Date.now(),
+          completed: false,
       },
     })
   }
@@ -42,12 +50,13 @@ class App extends React.Component {
         }
     })
 }
+
 render(){
     return (
     <div>
       <h1>My Todo List:</h1>
       <div>
-        {items.map(item =>(
+        {this.state.itemsList.map(item =>(
             <Todo itemProp={item}/>
         ))}
       </div>    

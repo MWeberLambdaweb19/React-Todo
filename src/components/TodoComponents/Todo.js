@@ -4,7 +4,7 @@ import './Todo.scss';
 function Todo(props){
     return(
         <div>
-            <h1>{props.itemProp.task}</h1>
+            <h3>{props.itemProp.task}</h3>
         </div>
     )
 }
