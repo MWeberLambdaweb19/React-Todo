@@ -1,49 +1,54 @@
 import React from 'react';
-import {items} from './TodoList.js';
-import Todo from './Todo.js';
 
-class TodoForm extends React.Component{
-    constructor() {
-        super();
-        this.state = {
-          itemsList: items,
-          newitem: {
-            task: "",
-          }
-        };
-      }
-    
-      addItem = event => {
-        console.log(event)
-        event.preventDefault();
-        this.setState({
-          itemsList: [...this.state.itemsList, this.state.newitem],
-          newitem: {
-              task:""
-          },
-        })
-      }
-    
-      handleChanges = event => {
-        console.log(event.target.value)
-        this.setState({
-            newitem: {
-                ...this.state.newitem,
-            [event.target.name]: event.target.value
-            }
-        })
-    }
-    render(){
-        return (
-        <div>
-            <form onSubmit={this.addItem}>
-                <input name="task" type="text" placeholder="Insert an item here!" value={this.state.newitem.task} onChange={this.handleChanges}></input>
-                <button>Add Todo</button>
-                <button>Clear Completed</button>
+export default function TodoForm(props) {
+  return(
+            <form onSubmit={props.handleSubmit}>
+              <input
+              type="text"
+              name="input"
+              id="new-item"
+              value={props.itemInput.task}
+              onChange={props.handleChange}
+            />
+            <button>Add Task</button>
             </form>
-        </div>
-        )
-    }
-};
+  )
+}
+// export default class TodoForm extends React.Component {
+//   constructor(props){
+//     super(props);
+//     this.state = {
+//       input: ""
+//     }
+//   }
 
-export default TodoForm;
+//   handleChange = event => {
+//     console.log("NAME:", event.target.name, "VALUE:", event.target.value)
+//     this.setState({[event.target.name]: event.target.value});
+//   }
+
+  
+//   handleSubmit = event => { 
+//     //Preserves state, updates global state with current value, and resets local state.
+//     console.log("Time to handle submit!")
+//     event.preventDefault();
+//     console.log("Does not refresh!")
+//     this.props.addTodo(this.state.input); 
+//     this.setState({input:""});
+//   }
+
+//   render() {
+//     return (
+//       <form onSubmit={this.handleSubmit}>
+//         <input
+//         type="text"
+//         name="input"
+//         id="new-item"
+//         value={this.state.input}
+//         onChange={this.handleChange}
+//       />
+//       <button>Add Task</button>
+//       </form>
+//     )
+//   }
+// }

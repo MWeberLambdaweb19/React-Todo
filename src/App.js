@@ -1,15 +1,16 @@
 import React from 'react';
-import Todo from './components/TodoComponents/Todo.js';
+import TodoList from './components/TodoComponents/TodoList.js';
+import TodoForm from './components/TodoComponents/TodoForm.js';
 
 const items = [
   {
     task: 'Organize Garage',
-    id: Date.now(),
+    id: 1754,
     completed: false,
   },
   {
     task: 'Bake Cookies',
-    id: Date.now(),
+    id: 1574,
     completed: false,
   }
 ]
@@ -21,54 +22,41 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      itemsList: [items],
-      newItem: {
-        task: "",
-        id: Date.now(),
-        completed: false,
-      }
+      itemList: items,
     };
   }
 
-  onSubmit = event => {
-    event.preventDefault();
-    this.setState({
-      itemsList: [...this.state.itemsList, this.state.newItem],
-      newItem: {
-          task: "",
-          id: Date.now(),
-          completed: false,
-      },
+  addTodo = (item="What Happens Here?") => {
+    console.log("ADDING ITEM:", item, "STATE:", this.state.itemList,)
+    this.setState((prevState, _) => {
+      itemList: [...prevState.itemList, {task: item, id: Math.round(Math.random()*500), completed: false,}],
+       // itemList: prevState.items + this.state.value,
+      // itemList: prevState.itemList.concat({task: item, id: Math.round(Math.random()*500), completed: false,})
     })
   }
 
-  handleChanges = event => {
-    this.setState({
-        newItem: {
-            ...this.state.newItem,
-        [event.target.name]: event.target.value
-        }
-    })
-}
+    handleChange = event => {
+    console.log("NAME:", event.target.name, "VALUE:", event.target.value)
+    this.setState({[event.target.name]: event.target.value});
+  }
 
-render(){
-    return (
-    <div>
-      <h1>My Todo List:</h1>
-      <div>
-        {this.state.itemsList.map(item =>(
-            <Todo itemProp={item}/>
-        ))}
-      </div>    
-      <div>
-          <form onSubmit={this.onSubmit}>
-              <input name="task" placeholder="Insert an item here!" value={this.state.newItem.task} onChange={this.handleChanges}></input>
-              <button>Add Todo</button>
-              <button>Clear Completed</button>
-          </form>
-      </div>
-    </div>
-    )
-}
+  
+  handleSubmit = event => { 
+    //Preserves state, updates global state with current value, and resets local state.
+    console.log("Time to handle submit!")
+    event.preventDefault();
+    console.log("Does not refresh!") 
+    this.addTodo() 
+  }
+  render(){
+      return (
+        <div>
+            <h1>My Todo List:</h1>
+            <TodoList itemsPropList={this.state.itemList} key={this.state.itemList.id} />
+            <TodoForm addTodo={this.addTodo} />
+        </div>
+      )
+  }
+
 };
 export default App;

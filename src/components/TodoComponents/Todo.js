@@ -1,7 +1,7 @@
 import React from 'react';
 import './Todo.scss';
 
-function Todo(props){
+export default function Todo(props){
     return(
         <div>
             <h3>{props.itemProp.task}</h3>
@@ -9,4 +9,3 @@ function Todo(props){
     )
 }
 
-export default Todo;
