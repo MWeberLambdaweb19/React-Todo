@@ -25,35 +25,35 @@ class App extends React.Component {
       itemList: items,
     };
   }
-
-  addTodo = (item="What Happens Here?") => {
-    console.log("ADDING ITEM:", item, "STATE:", this.state.itemList,)
-    this.setState((prevState, _) => {
-      itemList: [...prevState.itemList, {task: item, id: Math.round(Math.random()*500), completed: false,}],
-       // itemList: prevState.items + this.state.value,
+      // itemList: prevState.items + this.state.value,
       // itemList: prevState.itemList.concat({task: item, id: Math.round(Math.random()*500), completed: false,})
+  addItemToList = item => {
+    console.log("ADDING ITEM:", item, "STATE:", this.state.itemList,)
+    this.setState({itemList:[...this.state.itemList, {task: item, id:Date.now(), completed:false}]})
+    // setState selects an item from state, opens an array, spreads across a previous state (the array in question), then adds a new object {}
+  }
+
+  toggleComplete = id => {
+    this.setState({
+      itemList: this.state.itemList.map ( item => item.id === id? {...item, completed: !item.completed} : item)
+    });
+  };
+
+  removeItemfromList = () => {
+    this.setState({
+      itemList: this.state.itemList.filter(item => !item.completed)
     })
   }
 
-    handleChange = event => {
-    console.log("NAME:", event.target.name, "VALUE:", event.target.value)
-    this.setState({[event.target.name]: event.target.value});
-  }
-
-  
-  handleSubmit = event => { 
-    //Preserves state, updates global state with current value, and resets local state.
-    console.log("Time to handle submit!")
-    event.preventDefault();
-    console.log("Does not refresh!") 
-    this.addTodo() 
-  }
   render(){
       return (
         <div>
             <h1>My Todo List:</h1>
-            <TodoList itemsPropList={this.state.itemList} key={this.state.itemList.id} />
-            <TodoForm addTodo={this.addTodo} />
+            <TodoList 
+            itemsPropList={this.state.itemList} 
+            toggleCompleteProps={this.toggleComplete} />
+            <TodoForm addTodo={this.addItemToList} />
+            <button onClick={this.removeItemfromList}>Clear Completed</button>
         </div>
       )
   }

@@ -5,7 +5,7 @@ import Todo from './Todo.js';
 
 export default function TodoList(props) {
     return (
-      <div>{props.itemsPropList.map((item, i) => (<Todo key={i} itemProp={item} /> 
+      <div>{props.itemsPropList.map((item) => (<Todo key={item.id} itemProp={item} toggleComplete={props.toggleCompleteProps}/> 
       ))}
       </div>
     )
